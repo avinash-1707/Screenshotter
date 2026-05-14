@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Screenshotter
+
+Wrap screenshots in beautiful gradient backgrounds. Adjust, annotate, and export at full resolution — no account needed.
+
+![Screenshotter](https://og-image.vercel.app/Screenshotter.png)
+
+## Features
+
+- **10 gradient presets** — radial mesh, layered orbs, conic blends; dark and light
+- **Transform controls** — skew, rotate, offset with preset shortcuts
+- **Text overlay** — multiple fonts, colors, sizes; drag to reposition, double-click to edit inline
+- **Padding & border radius** sliders
+- **Full-res PNG export** — canvas renders exactly what you see
+- **Dark / light mode** — full CSS variable system, toggled via sun/moon button
+- **Paste support** — ⌘V / Ctrl+V pastes directly from clipboard
+
+## Stack
+
+| | |
+|---|---|
+| Framework | [Next.js 16](https://nextjs.org/) (App Router) |
+| UI | [React 19](https://react.dev/) + [Tailwind CSS v4](https://tailwindcss.com/) |
+| Animations | [motion/react](https://motion.dev/) |
+| Theming | [next-themes](https://github.com/pacocoursey/next-themes) |
+| Package manager | [Bun](https://bun.sh/) |
+| Fonts | Syne (display) + Outfit (body) via `next/font` |
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
+bun install
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+app/
+  page.tsx               # Landing page (server component)
+  dashboard/page.tsx     # Editor
+  globals.css            # Design tokens — full dark/light CSS variable system
+  providers.tsx          # ThemeProvider wrapper
+components/
+  landing/               # Navbar, Hero, Features, GradientShowcase
+  dashboard/             # ImageCanvas, TransformControls, TextPanel,
+  │                        GradientPicker, Sliders, UploadZone
+  ui/                    # Slider, ThemeToggle
+lib/
+  gradients.ts           # 10 gradient presets with canvas draw functions
+  types.ts               # Shared types (TextElement, Transform) and constants
+```
 
-## Learn More
+## License
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
