@@ -36,7 +36,7 @@ export function Slider({ label, value, min, max, step = 1, unit = '', onChange }
         step={step}
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
-        className="w-full h-1.5 rounded-full appearance-none cursor-pointer"
+        className="w-full h-1.5 rounded-full appearance-none cursor-ew-resize"
         style={{
           background: `linear-gradient(to right, var(--accent) ${pct}%, var(--border) 0%)`,
         }}

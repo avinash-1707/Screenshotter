@@ -93,6 +93,26 @@
   box-sizing: border-box;
 }
 
+/* Smooth dark/light theme transitions */
+*,
+*::before,
+*::after {
+  transition:
+    background-color 220ms ease,
+    color 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    fill 220ms ease,
+    stroke 220ms ease;
+}
+
+/* Don't slow down motion animations */
+.motion-safe\:transition-none,
+[data-framer-motion],
+canvas {
+  transition: none !important;
+}
+
 body {
   background: var(--bg);
   color: var(--text);

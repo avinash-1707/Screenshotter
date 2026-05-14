@@ -12,7 +12,7 @@ function MiniScreenshot() {
       style={{ background: '#0e0f1c', border: '1px solid rgba(255,255,255,.1)', boxShadow: '0 4px 24px rgba(0,0,0,.5)' }}
     >
       <div className="flex items-center gap-1.5 px-3 py-2.5" style={{ borderBottom: '1px solid rgba(255,255,255,.06)' }}>
-        {['#ff5f56','#ffbd2e','#27c93f'].map((c) => (
+        {['#ff5f56', '#ffbd2e', '#27c93f'].map((c) => (
           <div key={c} className="w-2 h-2 rounded-full" style={{ background: c }} />
         ))}
         <div className="ml-2 h-3 rounded-full" style={{ background: 'rgba(255,255,255,.07)', width: '90px' }} />
@@ -33,9 +33,9 @@ function MiniScreenshot() {
         <div className="space-y-1.5 pt-1">
           {[0.72, 0.45, 0.88, 0.55].map((w, i) => (
             <div key={i} className="flex items-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: ['#2dd4bf','#a78bfa','#f472b6','#fb923c'][i] }} />
+              <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: ['#2dd4bf', '#a78bfa', '#f472b6', '#fb923c'][i] }} />
               <div className="flex-1 h-1 rounded-full" style={{ background: 'rgba(255,255,255,.08)' }}>
-                <div className="h-full rounded-full" style={{ width: `${w * 100}%`, background: ['#2dd4bf','#a78bfa','#f472b6','#fb923c'][i], opacity: 0.7 }} />
+                <div className="h-full rounded-full" style={{ width: `${w * 100}%`, background: ['#2dd4bf', '#a78bfa', '#f472b6', '#fb923c'][i], opacity: 0.7 }} />
               </div>
             </div>
           ))}
@@ -45,7 +45,205 @@ function MiniScreenshot() {
   )
 }
 
-const SHOWCASE_GRADIENTS = [0, 3, 8, 6] // aurora, candy, neon, watermelon
+function SparkleIcon() {
+  return (
+    <motion.svg
+      width="14" height="14" viewBox="0 0 14 14" fill="none"
+      animate={{ rotate: [0, 20, -20, 0], scale: [1, 1.2, 0.95, 1] }}
+      transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+      style={{ color: 'var(--accent)', flexShrink: 0 }}
+    >
+      <path
+        d="M7 0.5L8.05 5.3L12.5 4.2L8.9 7L10.5 11.5L7 8.9L3.5 11.5L5.1 7L1.5 4.2L5.95 5.3L7 0.5Z"
+        fill="currentColor"
+      />
+    </motion.svg>
+  )
+}
+
+const SHOWCASE_GRADIENTS = [0, 3, 8, 6]
+
+function TransformIllustration({ activeIdx }: { activeIdx: number }) {
+  const currentGradient = GRADIENTS[SHOWCASE_GRADIENTS[activeIdx]]
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 28 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.7, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+      className="flex flex-col items-center gap-5 mb-12 w-full"
+    >
+      {/* Before → After visual row */}
+      <div className="flex items-center gap-3 sm:gap-6">
+
+        {/* BEFORE card */}
+        <div className="flex flex-col items-center gap-2">
+          <div
+            style={{
+              width: 'clamp(110px, 18vw, 160px)',
+              background: 'rgba(18, 20, 36, 0.88)',
+              border: '1px solid rgba(255,255,255,0.07)',
+              borderRadius: 10,
+              overflow: 'hidden',
+              boxShadow: '0 4px 24px rgba(0,0,0,0.5)',
+              backdropFilter: 'blur(10px)',
+            }}
+          >
+            <div style={{ borderBottom: '1px solid rgba(255,255,255,0.05)', padding: '6px 10px', display: 'flex', alignItems: 'center', gap: 4 }}>
+              {['#ff5f56', '#ffbd2e', '#27c93f'].map((c) => (
+                <div key={c} style={{ width: 5, height: 5, borderRadius: '50%', background: c, opacity: 0.45 }} />
+              ))}
+              <div style={{ marginLeft: 6, height: 3, width: 48, borderRadius: 9, background: 'rgba(255,255,255,0.07)' }} />
+            </div>
+            <div style={{ padding: 8, filter: 'grayscale(1) brightness(0.45) contrast(0.85)' }}>
+              <MiniScreenshot />
+            </div>
+          </div>
+          <span style={{
+            fontSize: 9,
+            fontFamily: 'var(--font-syne)',
+            color: 'rgba(255,255,255,0.28)',
+            letterSpacing: '0.12em',
+            textTransform: 'uppercase',
+          }}>
+            before
+          </span>
+        </div>
+
+        {/* Transform arrow */}
+        <div className="flex flex-col items-center gap-1">
+          <motion.div
+            animate={{ x: [0, 5, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+            style={{ display: 'flex', alignItems: 'center', gap: 5 }}
+          >
+            <SparkleIcon />
+            <svg width="36" height="10" viewBox="0 0 36 10" fill="none">
+              <path d="M0 5h30M24 1l6 4-6 4" stroke="url(#arrow-grad)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              <defs>
+                <linearGradient id="arrow-grad" x1="0" y1="0" x2="36" y2="0" gradientUnits="userSpaceOnUse">
+                  <stop stopColor="var(--accent)" stopOpacity="0.2" />
+                  <stop offset="1" stopColor="var(--accent)" stopOpacity="0.9" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </motion.div>
+          <span style={{
+            fontSize: 9,
+            fontFamily: 'var(--font-syne)',
+            color: 'rgba(255,255,255,0.2)',
+            letterSpacing: '0.1em',
+          }}>
+            enhance
+          </span>
+        </div>
+
+        {/* AFTER card — gradient wraps the screenshot */}
+        <div className="flex flex-col items-center gap-2">
+          <div style={{ position: 'relative' }}>
+            {/* Gradient layers cross-fade same as background */}
+            <div style={{ position: 'relative', padding: 10, borderRadius: 14, overflow: 'hidden', boxShadow: '0 10px 44px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.13)' }}>
+              {SHOWCASE_GRADIENTS.map((gIdx, i) => (
+                <div
+                  key={gIdx}
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: GRADIENTS[gIdx].css,
+                    opacity: i === activeIdx ? 1 : 0,
+                    transition: 'opacity 1.6s cubic-bezier(0.4,0,0.2,1)',
+                    borderRadius: 14,
+                  }}
+                />
+              ))}
+              <div
+                style={{
+                  position: 'relative',
+                  zIndex: 1,
+                  width: 'clamp(110px, 18vw, 160px)',
+                  background: 'rgba(13, 14, 26, 0.91)',
+                  border: '1px solid rgba(255,255,255,0.13)',
+                  borderRadius: 8,
+                  overflow: 'hidden',
+                  boxShadow: '0 2px 14px rgba(0,0,0,0.45)',
+                }}
+              >
+                <div style={{ borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '6px 10px', display: 'flex', alignItems: 'center', gap: 4 }}>
+                  {['#ff5f56', '#ffbd2e', '#27c93f'].map((c) => (
+                    <div key={c} style={{ width: 5, height: 5, borderRadius: '50%', background: c }} />
+                  ))}
+                  <div style={{ marginLeft: 6, height: 3, width: 48, borderRadius: 9, background: 'rgba(255,255,255,0.1)' }} />
+                </div>
+                <div style={{ padding: 8 }}>
+                  <MiniScreenshot />
+                </div>
+              </div>
+            </div>
+
+            {/* Glow ring that matches active gradient accent */}
+            <motion.div
+              animate={{ opacity: [0.4, 0.7, 0.4] }}
+              transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
+              style={{
+                position: 'absolute',
+                inset: -3,
+                borderRadius: 17,
+                background: 'transparent',
+                border: '1px solid var(--accent-35)',
+                pointerEvents: 'none',
+              }}
+            />
+          </div>
+          <span style={{
+            fontSize: 9,
+            fontFamily: 'var(--font-syne)',
+            color: 'var(--accent)',
+            letterSpacing: '0.12em',
+            textTransform: 'uppercase',
+          }}>
+            after
+          </span>
+        </div>
+
+      </div>
+
+      {/* Step pills */}
+      <div className="flex items-center gap-1.5 sm:gap-2">
+        {[
+          { label: 'Upload', symbol: '↑' },
+          { label: 'Pick gradient', symbol: '◈' },
+          { label: 'Export HD', symbol: '↓' },
+        ].map((step, i) => (
+          <div key={step.label} className="flex items-center gap-1.5 sm:gap-2">
+            <div
+              style={{
+                fontSize: 'clamp(9px, 1.8vw, 11px)',
+                fontFamily: 'var(--font-syne)',
+                color: 'rgba(255,255,255,0.55)',
+                background: 'rgba(0,0,0,0.3)',
+                backdropFilter: 'blur(10px)',
+                border: '1px solid rgba(255,255,255,0.1)',
+                padding: '3px 9px',
+                borderRadius: 20,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 4,
+                whiteSpace: 'nowrap',
+              }}
+            >
+              <span style={{ fontSize: 9, color: 'var(--accent)', opacity: 0.9 }}>{step.symbol}</span>
+              {step.label}
+            </div>
+            {i < 2 && (
+              <span style={{ color: 'rgba(255,255,255,0.18)', fontSize: 9 }}>→</span>
+            )}
+          </div>
+        ))}
+      </div>
+
+    </motion.div>
+  )
+}
 
 export default function Hero() {
   const [activeIdx, setActiveIdx] = useState(0)
@@ -55,11 +253,9 @@ export default function Hero() {
     return () => clearInterval(t)
   }, [])
 
-  const words = ['beautiful.']
-
   return (
     <section className="relative min-h-screen flex flex-col overflow-hidden pt-20">
-      {/* Live gradient layers — cross-fade on activeIdx change */}
+      {/* Live gradient layers */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {SHOWCASE_GRADIENTS.map((gIdx, i) => (
           <div
@@ -74,7 +270,6 @@ export default function Hero() {
             }}
           />
         ))}
-        {/* Dark radial vignette behind text only — gradient still visible at edges */}
         <div
           style={{
             position: 'absolute',
@@ -85,25 +280,17 @@ export default function Hero() {
       </div>
 
       {/* Hero content */}
-      <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 py-16 text-center">
-        {/* Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="inline-flex items-center gap-2 mb-8 text-xs font-semibold px-3 py-1.5 rounded-full"
-          style={{ background: 'rgba(0,0,0,0.35)', backdropFilter: 'blur(8px)', border: '1px solid var(--accent-50)', color: 'var(--accent)', fontFamily: 'var(--font-syne)', letterSpacing: '0.05em' }}
-        >
-          <span className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--accent)', display: 'inline-block' }} />
-          Screenshot enhancement tool
-        </motion.div>
+      <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 py-24 text-center">
+
+        {/* Transformation illustration */}
+        <TransformIllustration activeIdx={activeIdx} />
 
         {/* Main heading */}
-        <div className="mb-6 overflow-hidden">
+        <div className="mb-8 overflow-hidden">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.2 }}
+            transition={{ duration: 0.55, delay: 0.22 }}
             className="text-base sm:text-lg mb-1"
             style={{ color: 'rgba(255,255,255,0.85)', fontFamily: 'var(--font-syne)', fontWeight: 400, textShadow: '0 1px 12px rgba(0,0,0,0.6)' }}
           >
@@ -114,7 +301,7 @@ export default function Hero() {
             <motion.h1
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.7, delay: 0.32, ease: [0.22, 1, 0.36, 1] }}
               className="font-extrabold leading-none tracking-tight"
               style={{
                 fontFamily: 'var(--font-syne)',
@@ -122,27 +309,16 @@ export default function Hero() {
                 textShadow: '0 2px 32px rgba(0,0,0,0.7)',
               }}
             >
-              <span style={{ color: '#ffffff' }}>{words[0]}</span>
+              <span style={{ color: '#ffffff' }}>beautiful.</span>
             </motion.h1>
           </div>
         </div>
-
-        {/* Sub */}
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, delay: 0.45 }}
-          className="text-base sm:text-lg mb-10 max-w-md"
-          style={{ color: 'rgba(255,255,255,0.85)', lineHeight: 1.7, textShadow: '0 1px 12px rgba(0,0,0,0.6)' }}
-        >
-          Upload a screenshot, pick a gradient, adjust, and download at full resolution. No account needed.
-        </motion.p>
 
         {/* CTAs */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, delay: 0.55 }}
+          transition={{ duration: 0.55, delay: 0.48 }}
           className="flex flex-wrap items-center justify-center gap-3 mb-16"
         >
           <Link href="/dashboard">
@@ -184,7 +360,7 @@ export default function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 32 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.65, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.7, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="w-full max-w-4xl grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4"
         >
           {SHOWCASE_GRADIENTS.map((gIdx, i) => {
@@ -226,7 +402,7 @@ export default function Hero() {
           })}
         </motion.div>
 
-        {/* Gradient name indicator dots */}
+        {/* Indicator dots */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

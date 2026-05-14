@@ -77,6 +77,7 @@ const ImageCanvas = forwardRef<ImageCanvasRef, Props>(function ImageCanvas(
   const [dims, setDims] = useState({ width: 1, height: 1 })
   const [editOverlay, setEditOverlay] = useState<EditOverlay | null>(null)
   const editInputRef = useRef<HTMLInputElement>(null)
+  const [hoverCursor, setHoverCursor] = useState<'grab' | 'move'>('grab')
 
   const render = useCallback(async () => {
     const canvas = canvasRef.current
@@ -221,36 +222,40 @@ const ImageCanvas = forwardRef<ImageCanvasRef, Props>(function ImageCanvas(
     const hit = findHitText(pos.x, pos.y)
     if (hit) {
       onTextSelect(hit.id)
-      dragRef.current = {
-        type: 'text',
-        id: hit.id,
-        textOffX: pos.x - hit.x,
-        textOffY: pos.y - hit.y,
-      }
+      dragRef.current = { type: 'text', id: hit.id, textOffX: pos.x - hit.x, textOffY: pos.y - hit.y }
     } else {
       onTextSelect(null)
-      dragRef.current = {
-        type: 'image',
-        startMouseX: pos.x,
-        startMouseY: pos.y,
-        startOffsetX: transform.offsetX,
-        startOffsetY: transform.offsetY,
-      }
+      dragRef.current = { type: 'image', startMouseX: pos.x, startMouseY: pos.y, startOffsetX: transform.offsetX, startOffsetY: transform.offsetY }
     }
+    e.currentTarget.style.cursor = 'grabbing'
   }
 
   const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    if (!dragRef.current) return
     const pos = getCanvasPos(e)
-    if (dragRef.current.type === 'image') {
-      const { startMouseX, startMouseY, startOffsetX, startOffsetY } = dragRef.current
-      onOffsetChange(startOffsetX + (pos.x - startMouseX), startOffsetY + (pos.y - startMouseY))
-    } else {
-      onTextMove(dragRef.current.id, pos.x - dragRef.current.textOffX, pos.y - dragRef.current.textOffY)
+    if (dragRef.current) {
+      if (dragRef.current.type === 'image') {
+        const { startMouseX, startMouseY, startOffsetX, startOffsetY } = dragRef.current
+        onOffsetChange(startOffsetX + (pos.x - startMouseX), startOffsetY + (pos.y - startMouseY))
+      } else {
+        onTextMove(dragRef.current.id, pos.x - dragRef.current.textOffX, pos.y - dragRef.current.textOffY)
+      }
+      return
     }
+    // hover: update cursor based on what's under the pointer
+    const hit = findHitText(pos.x, pos.y)
+    const next = hit ? 'move' : 'grab'
+    if (next !== hoverCursor) setHoverCursor(next)
   }
 
-  const handleMouseUp = () => { dragRef.current = null }
+  const handleMouseUp = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    dragRef.current = null
+    // restore hover cursor so it reflects current position immediately
+    const pos = getCanvasPos(e)
+    const hit = findHitText(pos.x, pos.y)
+    const next = hit ? 'move' : 'grab'
+    setHoverCursor(next)
+    e.currentTarget.style.cursor = next
+  }
 
   const handleDoubleClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const pos = getCanvasPos(e)
@@ -280,7 +285,7 @@ const ImageCanvas = forwardRef<ImageCanvasRef, Props>(function ImageCanvas(
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
+        onMouseLeave={(e) => { dragRef.current = null; e.currentTarget.style.cursor = editingTextId ? 'text' : 'grab' }}
         onDoubleClick={handleDoubleClick}
         style={{
           display: 'block',
@@ -288,7 +293,7 @@ const ImageCanvas = forwardRef<ImageCanvasRef, Props>(function ImageCanvas(
           height: 'auto',
           borderRadius: '12px',
           boxShadow: 'var(--canvas-shadow)',
-          cursor: editingTextId ? 'default' : 'grab',
+          cursor: editingTextId ? 'text' : hoverCursor,
           userSelect: 'none',
         }}
       />

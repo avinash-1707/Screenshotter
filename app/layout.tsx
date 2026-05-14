@@ -1,13 +1,12 @@
 import type { Metadata } from 'next'
-import { Syne, Outfit, JetBrains_Mono } from 'next/font/google'
+import { Bricolage_Grotesque, Outfit, JetBrains_Mono } from 'next/font/google'
 import { Providers } from './providers'
 import './globals.css'
 
-const syne = Syne({
+const bricolage = Bricolage_Grotesque({
   subsets: ['latin'],
   variable: '--font-syne',
   display: 'swap',
-  weight: ['400', '500', '600', '700', '800'],
 })
 
 const outfit = Outfit({
@@ -23,8 +22,27 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Screenshotter — Beautiful Screenshot Backgrounds',
-  description: 'Wrap your screenshots in stunning gradient backgrounds. Adjust size, roundness, and download in one click.',
+  title: {
+    default: 'Screenshotter | Make Screenshots Beautiful',
+    template: '%s | Screenshotter',
+  },
+  description: 'Wrap your screenshots in stunning gradient backgrounds. Adjust padding, roundness and transform then export at full resolution. No signup required.',
+  keywords: ['screenshot', 'screenshot beautifier', 'gradient background', 'image editor', 'developer tool'],
+  openGraph: {
+    type: 'website',
+    siteName: 'Screenshotter',
+    title: 'Screenshotter | Make Screenshots Beautiful',
+    description: 'Wrap your screenshots in stunning gradient backgrounds. No signup required.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Screenshotter | Make Screenshots Beautiful',
+    description: 'Wrap your screenshots in stunning gradient backgrounds. No signup required.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 }
 
 export default function RootLayout({
@@ -33,7 +51,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${syne.variable} ${outfit.variable} ${jetbrainsMono.variable} h-full`} suppressHydrationWarning>
+    <html lang="en" className={`${bricolage.variable} ${outfit.variable} ${jetbrainsMono.variable} h-full`} suppressHydrationWarning>
       <body className="min-h-full flex flex-col antialiased">
         <Providers>{children}</Providers>
       </body>

@@ -19,14 +19,14 @@ export default function GradientShowcase() {
             Gradient library
           </p>
           <h2 className="text-3xl sm:text-5xl font-bold leading-tight" style={{ fontFamily: 'var(--font-syne)' }}>
-            10 hand-crafted backgrounds.
+            20 hand-crafted backgrounds.
           </h2>
           <p className="text-base mt-4 max-w-md leading-relaxed" style={{ color: 'var(--muted)' }}>
             Radial mesh, layered orbs, and conic blends. Dark and light. Each designed specifically for screenshots.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-3">
           {GRADIENTS.map((g, i) => (
             <motion.div
               key={g.id}

@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { motion } from 'motion/react'
 import { ThemeToggle } from '@/components/ui/ThemeToggle'
+import { ScreenshotterLogo } from '@/components/ui/Logo'
 
 export default function Navbar() {
   return (
@@ -21,12 +22,7 @@ export default function Navbar() {
       }}
     >
       <Link href="/" className="flex items-center gap-2 mr-2">
-        <div
-          className="w-5 h-5 rounded-md flex items-center justify-center text-xs font-bold"
-          style={{ background: 'linear-gradient(135deg, var(--accent), var(--accent-2))', color: '#fff', fontFamily: 'var(--font-syne)', fontSize: '10px' }}
-        >
-          S
-        </div>
+        <ScreenshotterLogo size={20} />
         <span className="text-sm font-bold" style={{ fontFamily: 'var(--font-syne)', color: 'var(--text)' }}>
           Screenshotter
         </span>

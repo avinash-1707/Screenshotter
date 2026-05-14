@@ -14,14 +14,17 @@ import TextPanel from '@/components/dashboard/TextPanel'
 import ImageCanvas, { type ImageCanvasRef } from '@/components/dashboard/ImageCanvas'
 import CodeCanvas, { type CodeCanvasRef } from '@/components/dashboard/CodeCanvas'
 import CodePanel, { getDefaultSnippet } from '@/components/dashboard/CodePanel'
+import PresetsPanel from '@/components/dashboard/PresetsPanel'
+import type { PresetConfig } from '@/lib/presets'
 
 type InputMode = 'image' | 'code'
-type Tab = 'style' | 'transform' | 'text'
+type Tab = 'style' | 'transform' | 'text' | 'presets'
 
 const TABS: { id: Tab; label: string }[] = [
   { id: 'style', label: 'Style' },
   { id: 'transform', label: 'Transform' },
   { id: 'text', label: 'Text' },
+  { id: 'presets', label: 'Presets' },
 ]
 
 export default function Dashboard() {
@@ -96,6 +99,16 @@ export default function Dashboard() {
 
   const updateText = (id: string, updates: Partial<TextElement>) =>
     setTextElements((prev) => prev.map((el) => (el.id === id ? { ...el, ...updates } : el)))
+
+  const applyPreset = (config: PresetConfig) => {
+    setGradientId(config.gradientId)
+    setPadding(config.padding)
+    setBorderRadius(config.borderRadius)
+    setTransform(config.transform)
+    setTextElements(config.textElements)
+    setSelectedTextId(null)
+    setEditingTextId(null)
+  }
 
   const moveText = (id: string, x: number, y: number) =>
     setTextElements((prev) => prev.map((el) => (el.id === id ? { ...el, x, y } : el)))
@@ -327,6 +340,18 @@ export default function Dashboard() {
                         onRemove={removeText}
                         onUpdate={updateText}
                         onEditStart={handleTextEditStart}
+                      />
+                    )}
+                    {activeTab === 'presets' && (
+                      <PresetsPanel
+                        currentConfig={{
+                          gradientId,
+                          padding,
+                          borderRadius,
+                          transform,
+                          textElements,
+                        }}
+                        onApply={applyPreset}
                       />
                     )}
                   </motion.div>

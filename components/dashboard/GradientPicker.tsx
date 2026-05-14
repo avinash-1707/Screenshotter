@@ -28,6 +28,7 @@ export default function GradientPicker({ selectedId, onChange }: Props) {
                 outline: selected ? '2px solid var(--accent)' : '2px solid transparent',
                 outlineOffset: '2px',
                 boxShadow: selected ? `0 0 12px var(--accent-30)` : 'none',
+                cursor: 'pointer',
               }}
             >
               {selected && (

@@ -22,11 +22,12 @@ export default function UploadZone({ onFile }: Props) {
 
   return (
     <div
-      className="relative flex flex-col items-center justify-center gap-4 rounded-2xl cursor-pointer transition-all duration-200"
+      className="relative flex flex-col items-center justify-center gap-4 rounded-2xl transition-all duration-200"
       style={{
         minHeight: '220px',
         border: `2px dashed ${dragging ? 'var(--accent)' : 'var(--border)'}`,
         background: dragging ? 'var(--accent-soft)' : 'var(--surface)',
+        cursor: dragging ? 'copy' : 'pointer',
       }}
       onClick={() => inputRef.current?.click()}
       onDragOver={(e) => { e.preventDefault(); setDragging(true) }}

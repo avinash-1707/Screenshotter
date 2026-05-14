@@ -146,4 +146,112 @@ export const GRADIENTS: GradientPreset[] = [
       orb(ctx, w * 0.7, h * 0.7, w * 0.45, 'rgba(16,185,129,.45)')
     },
   },
+  {
+    id: 'midnight',
+    name: 'Midnight',
+    css: 'radial-gradient(ellipse 80% 60% at 30% 40%, rgba(99,102,241,.6) 0%, transparent 60%), radial-gradient(ellipse 70% 70% at 80% 60%, rgba(59,130,246,.5) 0%, transparent 60%), radial-gradient(ellipse 40% 40% at 55% 95%, rgba(139,92,246,.4) 0%, transparent 60%), #02030e',
+    draw(ctx, w, h) {
+      ctx.fillStyle = '#02030e'
+      ctx.fillRect(0, 0, w, h)
+      orb(ctx, w * 0.3, h * 0.4, w * 0.5, 'rgba(99,102,241,.6)')
+      orb(ctx, w * 0.8, h * 0.6, w * 0.45, 'rgba(59,130,246,.5)')
+      orb(ctx, w * 0.55, h * 0.95, w * 0.3, 'rgba(139,92,246,.4)')
+    },
+  },
+  {
+    id: 'ember',
+    name: 'Ember',
+    css: 'radial-gradient(ellipse 80% 70% at 50% 110%, rgba(251,146,60,.9) 0%, transparent 55%), radial-gradient(ellipse 60% 60% at 20% 20%, rgba(239,68,68,.65) 0%, transparent 60%), radial-gradient(ellipse 40% 40% at 80% 10%, rgba(253,224,71,.45) 0%, transparent 60%), #0f0300',
+    draw(ctx, w, h) {
+      ctx.fillStyle = '#0f0300'
+      ctx.fillRect(0, 0, w, h)
+      orb(ctx, w * 0.5, h * 1.1, w * 0.6, 'rgba(251,146,60,.9)')
+      orb(ctx, w * 0.2, h * 0.2, w * 0.4, 'rgba(239,68,68,.65)')
+      orb(ctx, w * 0.8, h * 0.1, w * 0.3, 'rgba(253,224,71,.45)')
+    },
+  },
+  {
+    id: 'cosmic',
+    name: 'Cosmic',
+    css: 'radial-gradient(ellipse 80% 70% at 30% 30%, rgba(217,70,239,.65) 0%, transparent 60%), radial-gradient(ellipse 70% 60% at 80% 70%, rgba(139,92,246,.6) 0%, transparent 60%), radial-gradient(ellipse 50% 50% at 60% 5%, rgba(244,63,94,.45) 0%, transparent 60%), #080010',
+    draw(ctx, w, h) {
+      ctx.fillStyle = '#080010'
+      ctx.fillRect(0, 0, w, h)
+      orb(ctx, w * 0.3, h * 0.3, w * 0.55, 'rgba(217,70,239,.65)')
+      orb(ctx, w * 0.8, h * 0.7, w * 0.45, 'rgba(139,92,246,.6)')
+      orb(ctx, w * 0.6, h * 0.05, w * 0.35, 'rgba(244,63,94,.45)')
+    },
+  },
+  {
+    id: 'steel',
+    name: 'Steel',
+    css: 'radial-gradient(ellipse 80% 60% at 25% 40%, rgba(148,163,184,.5) 0%, transparent 60%), radial-gradient(ellipse 70% 70% at 80% 60%, rgba(100,116,139,.45) 0%, transparent 60%), radial-gradient(ellipse 40% 40% at 55% 100%, rgba(203,213,225,.3) 0%, transparent 60%), #060810',
+    draw(ctx, w, h) {
+      ctx.fillStyle = '#060810'
+      ctx.fillRect(0, 0, w, h)
+      orb(ctx, w * 0.25, h * 0.4, w * 0.5, 'rgba(148,163,184,.5)')
+      orb(ctx, w * 0.8, h * 0.6, w * 0.45, 'rgba(100,116,139,.45)')
+      orb(ctx, w * 0.55, h * 1.0, w * 0.3, 'rgba(203,213,225,.3)')
+    },
+  },
+  {
+    id: 'sakura',
+    name: 'Sakura',
+    css: 'radial-gradient(ellipse 80% 70% at 20% 30%, rgba(251,207,232,.9) 0%, transparent 55%), radial-gradient(ellipse 70% 70% at 80% 65%, rgba(254,215,170,.75) 0%, transparent 60%), radial-gradient(ellipse 60% 60% at 60% 95%, rgba(249,168,212,.8) 0%, transparent 60%), #fff5f8',
+    draw(ctx, w, h) {
+      ctx.fillStyle = '#fff5f8'
+      ctx.fillRect(0, 0, w, h)
+      orb(ctx, w * 0.2, h * 0.3, w * 0.5, 'rgba(251,207,232,.9)')
+      orb(ctx, w * 0.8, h * 0.65, w * 0.45, 'rgba(254,215,170,.75)')
+      orb(ctx, w * 0.6, h * 0.95, w * 0.4, 'rgba(249,168,212,.8)')
+    },
+  },
+  {
+    id: 'lemon',
+    name: 'Lemon Drop',
+    css: 'radial-gradient(ellipse 80% 70% at 25% 30%, rgba(163,230,53,.7) 0%, transparent 60%), radial-gradient(ellipse 70% 70% at 80% 70%, rgba(250,204,21,.65) 0%, transparent 60%), radial-gradient(ellipse 50% 50% at 55% 5%, rgba(74,222,128,.45) 0%, transparent 60%), #030a00',
+    draw(ctx, w, h) {
+      ctx.fillStyle = '#030a00'
+      ctx.fillRect(0, 0, w, h)
+      orb(ctx, w * 0.25, h * 0.3, w * 0.5, 'rgba(163,230,53,.7)')
+      orb(ctx, w * 0.8, h * 0.7, w * 0.45, 'rgba(250,204,21,.65)')
+      orb(ctx, w * 0.55, h * 0.05, w * 0.35, 'rgba(74,222,128,.45)')
+    },
+  },
+  {
+    id: 'coral',
+    name: 'Coral Reef',
+    css: 'radial-gradient(ellipse 80% 70% at 25% 40%, rgba(251,113,133,.75) 0%, transparent 60%), radial-gradient(ellipse 70% 60% at 80% 65%, rgba(45,212,191,.55) 0%, transparent 60%), radial-gradient(ellipse 50% 50% at 55% 5%, rgba(251,191,36,.5) 0%, transparent 60%), #0d0306',
+    draw(ctx, w, h) {
+      ctx.fillStyle = '#0d0306'
+      ctx.fillRect(0, 0, w, h)
+      orb(ctx, w * 0.25, h * 0.4, w * 0.5, 'rgba(251,113,133,.75)')
+      orb(ctx, w * 0.8, h * 0.65, w * 0.45, 'rgba(45,212,191,.55)')
+      orb(ctx, w * 0.55, h * 0.05, w * 0.35, 'rgba(251,191,36,.5)')
+    },
+  },
+  {
+    id: 'lilac',
+    name: 'Lilac Dream',
+    css: 'radial-gradient(ellipse 80% 70% at 25% 30%, rgba(196,181,253,.85) 0%, transparent 55%), radial-gradient(ellipse 70% 70% at 80% 70%, rgba(216,180,254,.75) 0%, transparent 60%), radial-gradient(ellipse 60% 60% at 55% 5%, rgba(167,243,208,.6) 0%, transparent 60%), #f7f3ff',
+    draw(ctx, w, h) {
+      ctx.fillStyle = '#f7f3ff'
+      ctx.fillRect(0, 0, w, h)
+      orb(ctx, w * 0.25, h * 0.3, w * 0.5, 'rgba(196,181,253,.85)')
+      orb(ctx, w * 0.8, h * 0.7, w * 0.45, 'rgba(216,180,254,.75)')
+      orb(ctx, w * 0.55, h * 0.05, w * 0.4, 'rgba(167,243,208,.6)')
+    },
+  },
+  {
+    id: 'rose-gold',
+    name: 'Rose Gold',
+    css: 'radial-gradient(ellipse 80% 70% at 20% 35%, rgba(255,182,193,.8) 0%, transparent 60%), radial-gradient(ellipse 70% 70% at 80% 65%, rgba(255,210,120,.7) 0%, transparent 60%), radial-gradient(ellipse 50% 50% at 55% 5%, rgba(255,150,170,.5) 0%, transparent 60%), #12050a',
+    draw(ctx, w, h) {
+      ctx.fillStyle = '#12050a'
+      ctx.fillRect(0, 0, w, h)
+      orb(ctx, w * 0.2, h * 0.35, w * 0.55, 'rgba(255,182,193,.8)')
+      orb(ctx, w * 0.8, h * 0.65, w * 0.5, 'rgba(255,210,120,.7)')
+      orb(ctx, w * 0.55, h * 0.05, w * 0.35, 'rgba(255,150,170,.5)')
+    },
+  },
 ]

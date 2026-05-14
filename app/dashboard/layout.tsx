@@ -26,7 +26,12 @@ const pacifico = Pacifico({
 })
 
 export const metadata: Metadata = {
-  title: 'Dashboard — Screenshotter',
+  title: 'Editor',
+  description: 'Beautify screenshots with gradient backgrounds, custom transforms and text overlays.',
+  robots: {
+    index: false,
+    follow: false,
+  },
 }
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
