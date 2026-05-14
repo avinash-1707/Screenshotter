@@ -1,26 +1,198 @@
 @import "tailwindcss";
 
+/* ─── Dark theme (default) ───────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Core */
+  --bg: #070810;
+  --surface: #0d0e1f;
+  --card: #131526;
+  --border: #1e2035;
+  --text: #dde1ff;
+  --muted: #6870a0;
+  --accent: #2dd4bf;
+  --accent-2: #a78bfa;
+  --accent-3: #f472b6;
+  --on-accent: #030d0c;
+
+  /* Accent alpha — computed from the accent var so they flip in light mode */
+  --accent-soft:  color-mix(in srgb, var(--accent) 12%, transparent);
+  --accent-15:    color-mix(in srgb, var(--accent) 15%, transparent);
+  --accent-20:    color-mix(in srgb, var(--accent) 20%, transparent);
+  --accent-25:    color-mix(in srgb, var(--accent) 25%, transparent);
+  --accent-30:    color-mix(in srgb, var(--accent) 30%, transparent);
+  --accent-35:    color-mix(in srgb, var(--accent) 35%, transparent);
+  --accent-40:    color-mix(in srgb, var(--accent) 40%, transparent);
+  --accent-50:    color-mix(in srgb, var(--accent) 50%, transparent);
+  --accent-70:    color-mix(in srgb, var(--accent) 70%, transparent);
+  --accent-2-15:  color-mix(in srgb, var(--accent-2) 15%, transparent);
+  --accent-2-20:  color-mix(in srgb, var(--accent-2) 20%, transparent);
+  --accent-2-30:  color-mix(in srgb, var(--accent-2) 30%, transparent);
+
+  /* Glass / overlay */
+  --bg-glass:      rgba(7, 8, 16, 0.85);
+  --surface-glass: rgba(13, 14, 31, 0.82);
+  --border-subtle: rgba(255, 255, 255, 0.07);
+  --invert-5:      rgba(255, 255, 255, 0.05);
+  --invert-8:      rgba(255, 255, 255, 0.08);
+  --invert-10:     rgba(255, 255, 255, 0.10);
+  --invert-15:     rgba(255, 255, 255, 0.15);
+  --invert-20:     rgba(255, 255, 255, 0.20);
+  --invert-30:     rgba(255, 255, 255, 0.30);
+  --overlay-xs:    rgba(0, 0, 0, 0.12);
+  --overlay-sm:    rgba(0, 0, 0, 0.20);
+  --overlay:       rgba(0, 0, 0, 0.35);
+  --overlay-lg:    rgba(0, 0, 0, 0.55);
+  --shadow-sm:     rgba(0, 0, 0, 0.25);
+  --shadow:        rgba(0, 0, 0, 0.40);
+  --shadow-lg:     rgba(0, 0, 0, 0.60);
+  --dot-grid:      rgba(255, 255, 255, 0.04);
+  --canvas-shadow: 0 12px 60px rgba(0, 0, 0, 0.6);
+}
+
+/* ─── Light theme ────────────────────────────────────────────── */
+[data-theme="light"] {
+  --bg: #f5f7ff;
+  --surface: #eef0fa;
+  --card: #ffffff;
+  --border: #dde1f5;
+  --text: #0d0f1e;
+  --muted: #7078a8;
+  --accent: #0d9488;
+  --accent-2: #6d28d9;
+  --accent-3: #be185d;
+  --on-accent: #ffffff;
+
+  --bg-glass:      rgba(245, 247, 255, 0.88);
+  --surface-glass: rgba(238, 240, 250, 0.88);
+  --border-subtle: rgba(0, 0, 0, 0.08);
+  --invert-5:      rgba(0, 0, 0, 0.04);
+  --invert-8:      rgba(0, 0, 0, 0.06);
+  --invert-10:     rgba(0, 0, 0, 0.08);
+  --invert-15:     rgba(0, 0, 0, 0.12);
+  --invert-20:     rgba(0, 0, 0, 0.15);
+  --invert-30:     rgba(0, 0, 0, 0.22);
+  --overlay-xs:    rgba(0, 0, 0, 0.06);
+  --overlay-sm:    rgba(0, 0, 0, 0.10);
+  --overlay:       rgba(0, 0, 0, 0.18);
+  --overlay-lg:    rgba(0, 0, 0, 0.30);
+  --shadow-sm:     rgba(0, 0, 0, 0.06);
+  --shadow:        rgba(0, 0, 0, 0.10);
+  --shadow-lg:     rgba(0, 0, 0, 0.18);
+  --dot-grid:      rgba(0, 0, 0, 0.05);
+  --canvas-shadow: 0 12px 60px rgba(0, 0, 0, 0.12);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--bg);
+  --color-foreground: var(--text);
+  --font-sans: var(--font-outfit), system-ui, sans-serif;
+  --font-display: var(--font-syne), system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-outfit), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: var(--surface);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted);
+}
+
+input[type='range'] {
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(30px, -40px) scale(1.05); }
+  66%       { transform: translate(-20px, 20px) scale(0.97); }
+}
+
+@keyframes float-medium {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  40%       { transform: translate(-35px, 25px) scale(1.08); }
+  70%       { transform: translate(25px, -30px) scale(0.95); }
+}
+
+@keyframes float-fast {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%       { transform: translate(20px, 35px) scale(1.04); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 1; }
+}
+
+.anim-fade-up {
+  animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.anim-fade-in {
+  animation: fade-in 0.5s ease both;
+}
+
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+.delay-600 { animation-delay: 0.6s; }
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-20);
+  cursor: pointer;
+}
+input[type='range']::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: none;
+  cursor: pointer;
+}
+
+.glow-accent {
+  box-shadow: 0 0 0 1px var(--accent-30), 0 0 24px var(--accent-15);
 }
