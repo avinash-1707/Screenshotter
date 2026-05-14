@@ -147,8 +147,8 @@ export default function Dashboard() {
   const showDownload = inputMode === 'code' || !!image
 
   return (
-    <div className="flex flex-col min-h-screen" style={{ background: 'var(--bg)' }}>
-      <div className="flex flex-1 overflow-hidden flex-col lg:flex-row">
+    <div className="flex flex-col h-screen overflow-hidden" style={{ background: 'var(--bg)' }}>
+      <div className="flex flex-1 min-h-0 overflow-hidden flex-col lg:flex-row">
 
         {/* ── Sidebar ────────────────────────────────────────────── */}
         <motion.aside
@@ -281,7 +281,7 @@ export default function Dashboard() {
           </div>
 
           {/* Controls */}
-          <div className="p-5 flex flex-col gap-4 flex-1">
+          <div className="p-5 flex flex-col gap-4">
             {inputMode === 'image' ? (
               <>
                 {/* Image mode: tabs */}
