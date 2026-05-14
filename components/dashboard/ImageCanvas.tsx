@@ -8,7 +8,7 @@ import type { GradientPreset } from '@/lib/gradients'
 import type { TextElement, Transform } from '@/lib/types'
 
 export type ImageCanvasRef = {
-  download: () => void
+  download: (filename?: string) => void
   getCanvasSize: () => { width: number; height: number }
 }
 
@@ -36,6 +36,7 @@ type Props = {
   textElements: TextElement[]
   selectedTextId: string | null
   editingTextId: string | null
+  aspectRatio?: { w: number; h: number } | null
   onOffsetChange: (x: number, y: number) => void
   onTextMove: (id: string, x: number, y: number) => void
   onTextSelect: (id: string | null) => void
@@ -66,6 +67,7 @@ const ImageCanvas = forwardRef<ImageCanvasRef, Props>(function ImageCanvas(
   {
     image, gradient, padding, borderRadius, transform,
     textElements, selectedTextId, editingTextId,
+    aspectRatio,
     onOffsetChange, onTextMove, onTextSelect,
     onTextEditStart, onTextEditEnd, onTextContentChange,
   },
@@ -98,8 +100,19 @@ const ImageCanvas = forwardRef<ImageCanvasRef, Props>(function ImageCanvas(
     const skewXExtra = Math.ceil(Math.abs(Math.tan(skewXRad)) * imgH)
     const skewYExtra = Math.ceil(Math.abs(Math.tan(skewYRad)) * imgW)
 
-    const canvasW = Math.round(imgW * (1 + 2 * padFrac)) + skewXExtra * 2 + rotExtra * 2
-    const canvasH = Math.round(imgH * (1 + 2 * padFrac)) + skewYExtra * 2 + rotExtra * 2
+    const naturalW = Math.round(imgW * (1 + 2 * padFrac)) + skewXExtra * 2 + rotExtra * 2
+    const naturalH = Math.round(imgH * (1 + 2 * padFrac)) + skewYExtra * 2 + rotExtra * 2
+
+    let canvasW = naturalW
+    let canvasH = naturalH
+    if (aspectRatio) {
+      const targetAR = aspectRatio.w / aspectRatio.h
+      if (naturalW / naturalH < targetAR) {
+        canvasW = Math.round(naturalH * targetAR)
+      } else {
+        canvasH = Math.round(naturalW / targetAR)
+      }
+    }
 
     if (canvas.width !== canvasW || canvas.height !== canvasH) {
       canvas.width  = canvasW
@@ -150,7 +163,7 @@ const ImageCanvas = forwardRef<ImageCanvasRef, Props>(function ImageCanvas(
         ctx.restore()
       }
     }
-  }, [image, gradient, padding, borderRadius, transform, textElements, editingTextId])
+  }, [image, gradient, padding, borderRadius, transform, textElements, editingTextId, aspectRatio])
 
   useEffect(() => { render() }, [render])
 
@@ -183,11 +196,11 @@ const ImageCanvas = forwardRef<ImageCanvasRef, Props>(function ImageCanvas(
   }, [editOverlay])
 
   useImperativeHandle(ref, () => ({
-    download() {
+    download(filename = 'screenshotter') {
       const canvas = canvasRef.current
       if (!canvas) return
       const link = document.createElement('a')
-      link.download = 'screenshotter.png'
+      link.download = `${filename}.png`
       link.href = canvas.toDataURL('image/png')
       link.click()
     },

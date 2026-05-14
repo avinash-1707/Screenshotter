@@ -27,7 +27,7 @@ import 'prismjs/components/prism-php'
 import 'prismjs/components/prism-yaml'
 
 export type CodeCanvasRef = {
-  download: () => Promise<void>
+  download: (filename?: string) => Promise<void>
 }
 
 export const LANGUAGE_META: Record<string, { label: string; ext: string; prismKey: string }> = {
@@ -61,18 +61,19 @@ type Props = {
   padding: number       // 0–60
   borderRadius: number  // 0–80
   codeTheme: 'dark' | 'light'
+  aspectRatio?: { w: number; h: number } | null
 }
 
 const MONO = 'var(--font-jetbrains-mono), "JetBrains Mono", "Fira Code", "Cascadia Code", monospace'
 
 const CodeCanvas = forwardRef<CodeCanvasRef, Props>(function CodeCanvas(
-  { code, language, filename, gradient, padding, borderRadius, codeTheme },
+  { code, language, filename, gradient, padding, borderRadius, codeTheme, aspectRatio },
   ref,
 ) {
   const containerRef = useRef<HTMLDivElement>(null)
 
   useImperativeHandle(ref, () => ({
-    async download() {
+    async download(filename = 'screenshotter') {
       const el = containerRef.current
       if (!el) return
       const dataUrl = await toPng(el, {
@@ -85,7 +86,7 @@ const CodeCanvas = forwardRef<CodeCanvasRef, Props>(function CodeCanvas(
         },
       })
       const a = document.createElement('a')
-      a.download = 'screenshotter-code.png'
+      a.download = `${filename}.png`
       a.href = dataUrl
       a.click()
     },
@@ -126,9 +127,14 @@ const CodeCanvas = forwardRef<CodeCanvasRef, Props>(function CodeCanvas(
         background: gradient.css,
         padding: `${padPx}px`,
         borderRadius: 0,
-        display: 'block',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'stretch',
+        justifyContent: 'center',
         width: '100%',
         boxSizing: 'border-box',
+        overflow: 'hidden',
+        ...(aspectRatio ? { aspectRatio: `${aspectRatio.w} / ${aspectRatio.h}` } : {}),
       }}
     >
       <div

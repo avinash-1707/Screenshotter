@@ -19,6 +19,15 @@ import type { PresetConfig } from '@/lib/presets'
 
 type InputMode = 'image' | 'code'
 type Tab = 'style' | 'transform' | 'text' | 'presets'
+type AspectRatio = { w: number; h: number } | null
+
+const ASPECT_RATIOS: { label: string; value: AspectRatio }[] = [
+  { label: 'Free', value: null },
+  { label: '16:9', value: { w: 16, h: 9 } },
+  { label: '4:3',  value: { w: 4,  h: 3 } },
+  { label: '1:1',  value: { w: 1,  h: 1 } },
+  { label: '9:16', value: { w: 9,  h: 16 } },
+]
 
 const TABS: { id: Tab; label: string }[] = [
   { id: 'style', label: 'Style' },
@@ -49,6 +58,10 @@ export default function Dashboard() {
   const [filename, setFilename] = useState('untitled')
   const [codeTheme, setCodeTheme] = useState<'dark' | 'light'>('dark')
   const codeCanvasRef = useRef<CodeCanvasRef>(null)
+
+  // ── Download ──────────────────────────────────────────────────
+  const [downloadFilename, setDownloadFilename] = useState('screenshotter')
+  const [aspectRatio, setAspectRatio] = useState<AspectRatio>({ w: 16, h: 9 })
 
   const gradient = GRADIENTS.find((g) => g.id === gradientId) ?? GRADIENTS[0]
 
@@ -140,8 +153,9 @@ export default function Dashboard() {
   }
 
   const handleDownload = () => {
-    if (inputMode === 'code') codeCanvasRef.current?.download()
-    else canvasRef.current?.download()
+    const name = downloadFilename.trim() || 'screenshotter'
+    if (inputMode === 'code') codeCanvasRef.current?.download(name)
+    else canvasRef.current?.download(name)
   }
 
   const showDownload = inputMode === 'code' || !!image
@@ -378,6 +392,41 @@ export default function Dashboard() {
                 className="p-5"
                 style={{ borderTop: '1px solid var(--border)' }}
               >
+                {/* Aspect ratio */}
+                <p className="text-xs font-semibold mb-2" style={{ color: 'var(--muted)', fontFamily: 'var(--font-syne)' }}>Aspect Ratio</p>
+                <div className="flex gap-1 mb-3">
+                  {ASPECT_RATIOS.map(({ label, value }) => {
+                    const active = value === null ? aspectRatio === null : aspectRatio?.w === value.w && aspectRatio?.h === value.h
+                    return (
+                      <button
+                        key={label}
+                        onClick={() => setAspectRatio(value)}
+                        className="flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                        style={{
+                          fontFamily: 'var(--font-syne)',
+                          background: active ? 'linear-gradient(135deg, var(--accent), var(--accent-2))' : 'var(--card)',
+                          color: active ? 'var(--on-accent)' : 'var(--muted)',
+                          border: `1px solid ${active ? 'transparent' : 'var(--border)'}`,
+                        }}
+                      >
+                        {label}
+                      </button>
+                    )
+                  })}
+                </div>
+
+                {/* Filename */}
+                <div className="flex items-center rounded-xl overflow-hidden mb-3" style={{ border: '1px solid var(--border)', background: 'var(--card)' }}>
+                  <input
+                    type="text"
+                    value={downloadFilename}
+                    onChange={(e) => setDownloadFilename(e.target.value)}
+                    className="flex-1 bg-transparent px-3 py-2 text-sm outline-none"
+                    style={{ color: 'var(--text)', fontFamily: 'var(--font-syne)' }}
+                    spellCheck={false}
+                  />
+                  <span className="px-3 py-2 text-xs select-none" style={{ color: 'var(--text-muted)', borderLeft: '1px solid var(--border)' }}>.png</span>
+                </div>
                 <motion.button
                   whileHover={{ scale: 1.02, filter: 'brightness(1.1)' }}
                   whileTap={{ scale: 0.98 }}
@@ -450,6 +499,7 @@ export default function Dashboard() {
                     textElements={textElements}
                     selectedTextId={selectedTextId}
                     editingTextId={editingTextId}
+                    aspectRatio={aspectRatio}
                     onOffsetChange={(x, y) => updateTransform({ offsetX: x, offsetY: y })}
                     onTextMove={moveText}
                     onTextSelect={handleTextSelect}
@@ -513,6 +563,7 @@ export default function Dashboard() {
                   padding={padding}
                   borderRadius={borderRadius}
                   codeTheme={codeTheme}
+                  aspectRatio={aspectRatio}
                 />
 
                 {/* Code theme toggle — overlaid, excluded from PNG export */}
