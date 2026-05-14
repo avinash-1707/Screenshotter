@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Syne, Outfit } from 'next/font/google'
+import { Syne, Outfit, JetBrains_Mono } from 'next/font/google'
 import { Providers } from './providers'
 import './globals.css'
 
@@ -16,6 +16,12 @@ const outfit = Outfit({
   display: 'swap',
 })
 
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-jetbrains-mono',
+  display: 'swap',
+})
+
 export const metadata: Metadata = {
   title: 'Screenshotter — Beautiful Screenshot Backgrounds',
   description: 'Wrap your screenshots in stunning gradient backgrounds. Adjust size, roundness, and download in one click.',
@@ -27,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${syne.variable} ${outfit.variable} h-full`} suppressHydrationWarning>
+    <html lang="en" className={`${syne.variable} ${outfit.variable} ${jetbrainsMono.variable} h-full`} suppressHydrationWarning>
       <body className="min-h-full flex flex-col antialiased">
         <Providers>{children}</Providers>
       </body>
