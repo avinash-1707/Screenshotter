@@ -161,15 +161,15 @@ export default function Dashboard() {
   const showDownload = inputMode === 'code' || !!image
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden" style={{ background: 'var(--bg)' }}>
-      <div className="flex flex-1 min-h-0 overflow-hidden flex-col lg:flex-row">
+    <div className="flex flex-col min-h-screen lg:h-screen lg:overflow-hidden" style={{ background: 'var(--bg)' }}>
+      <div className="flex-1 min-h-0 lg:flex lg:flex-row lg:overflow-hidden">
 
         {/* ── Sidebar ────────────────────────────────────────────── */}
         <motion.aside
           initial={{ x: -20, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.4, ease: 'easeOut' }}
-          className="flex-shrink-0 w-full lg:w-72 xl:w-80 flex flex-col overflow-y-auto"
+          className="flex-shrink-0 w-full lg:w-72 xl:w-80 flex flex-col lg:overflow-y-auto"
           style={{ borderRight: '1px solid var(--border)', background: 'var(--surface)' }}
         >
           {/* Mode switcher */}
@@ -452,7 +452,7 @@ export default function Dashboard() {
 
         {/* ── Canvas area ──────────────────────────────────────────── */}
         <main
-          className="flex-1 relative flex items-center justify-center p-6 lg:p-12 overflow-auto"
+          className="lg:flex-1 relative flex items-center justify-center p-4 sm:p-6 lg:p-12 lg:overflow-auto min-h-screen lg:min-h-0"
           style={{
             background: 'var(--bg)',
             backgroundImage: 'radial-gradient(circle, var(--dot-grid) 1px, transparent 1px)',
